@@ -1,9 +1,9 @@
 # This script cleans up unused source folders DA-Tool leaves behind
 
 # Set site-specific variables
-$DatSourceRoot = '\\CM-Server\source\packages\DA-Tool'
-$SiteCode = "SC1" # Site code 
-$ProviderMachineName = "CM-Server.domain.name" # SMS Provider machine name
+$DatSourceRoot = '\\SITE-SERVER\source\Packages\DA-Tool'
+$SiteCode = "P01" # Site code 
+$ProviderMachineName = "SITE-SERVER.domain.name" # SMS Provider machine name
 
 # Import the ConfigurationManager.psd1 module 
 Push-Location
