@@ -13,8 +13,8 @@ This script removes these orphaned package source folders so I don't have to.
   ```powershell
   # Set site-specific variables
   $DatSourceRoot = '\\SITE-SERVER\source\Packages\DA-Tool'
-  $SiteCode = "P01" # Site code 
-  $ProviderMachineName = "SITE-SERVER.domain.name" # SMS Provider machine name
+  $SiteCode = 'P01' # Site code 
+  $ProviderMachineName = 'SITE-SERVER.domain.name' # SMS Provider machine name
   ```
 
 ## Usage
