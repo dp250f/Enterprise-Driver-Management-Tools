@@ -2,8 +2,8 @@
 
 # Set site-specific variables
 $DatSourceRoot = '\\SITE-SERVER\source\Packages\DA-Tool'
-$SiteCode = "P01" # Site code 
-$ProviderMachineName = "SITE-SERVER.domain.name" # SMS Provider machine name
+$SiteCode = 'P01' # Site code 
+$ProviderMachineName = 'SITE-SERVER.domain.name' # SMS Provider machine name
 
 # Import the ConfigurationManager.psd1 module 
 Push-Location
