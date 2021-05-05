@@ -1,4 +1,4 @@
-# DATool-PkgSourceCleanup
+# DATool-PkgSourceCleanup.ps1
 
 We all love [Maurice Daly's Driver Automation Tool](https://github.com/maurice-daly/DriverAutomationTool). After adopting it in my Configuration Manager environment, I noticed it does not remove previous versions of package source folders, leaving me to manually search for and delete them. Of course I had to automate this task, so I wrote this quick and dirty script to do it for me.
 
@@ -21,7 +21,8 @@ This script removes these orphaned package source folders so I don't have to.
 
 * Right-click the script and choose 'Run with Powershell'
   ![Screenshot02](https://github.com/dp250f/Documentation/blob/main/DATool-PkgSourceCleanup/DATool-PkgSourceCleanup02.PNG?raw=true)
-* Make your choice
+* Make your choice (y/n)
+* Script pauses after running so you can review deleted files
 
 ## Disclaimer
 This script works for me in my environment. I cannot guarantee it will work in other environments. Always test other people's code thoroughly before using it in yours.
