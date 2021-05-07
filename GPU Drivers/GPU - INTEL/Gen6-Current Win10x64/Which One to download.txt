@@ -1,0 +1,3 @@
+Intel® Graphics - Windows® 10 DCH Drivers
+
+Intel® Graphics Driver for Xe Dedicated, 6th - 11th generation, Apollo Lake, Gemini Lake, Amber Lake, Whiskey Lake, Comet Lake, Lakefield, Jasper Lake, and Rocket Lake

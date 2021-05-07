@@ -1,0 +1,3 @@
+Intel® Graphics Driver for Windows
+
+This download installs the Intel® Graphics Driver for Baytrail and 3rd generation
