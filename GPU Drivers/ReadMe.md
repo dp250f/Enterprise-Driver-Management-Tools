@@ -45,7 +45,7 @@ This script creates/updates GPU Driver and GPU Detect packages. The only thing y
 
 ## Script 'Installation'
 
-* Download this repository and extract it into a local folder (keep the path short just in case)
+* Download this repository and extract 'GPU Drivers' into a local folder (keep the path short just in case)
 
   ![Screenshot01](https://github.com/dp250f/Documentation/blob/main/GPU-Drivers/Screenshot01.png?raw=true)
 
