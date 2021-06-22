@@ -107,7 +107,7 @@ ForEach ($Adapter in $DisplayAdapters) {
     $SearchStr = "$($Adapter.PNPDeviceID -replace 'PCI\\' -replace '\&SUBSYS.*')"
     # Search each Driver Detect file for this adapter's DeviceID
     ForEach ($DetectFile in $DriverDetectFiles | Where-Object Name -match 'AMD-') {
-      If (Select-String -Path $DetectFile -Pattern $SearchStr | Where-Object {$_ -notmatch 'Legacy'}) {
+      If (Select-String -Path $DetectFile -Pattern $SearchStr | Where-Object {$_.Line -notmatch 'Legacy'}) {
         # Add DetectFile name to $DriverMatches
         $DriverMatches += $DetectFile.BaseName
         Write-Log -Message "Found matching driver '$($DetectFile.BaseName)'" -LogType 'Information'
@@ -120,7 +120,7 @@ ForEach ($Adapter in $DisplayAdapters) {
     $SearchStr = "$($Adapter.PNPDeviceID -replace 'PCI\\VEN_10DE\&' -replace '\&SUBSYS.*')"
     # Search each Driver Detect file for this adapter's DeviceID
     ForEach ($DetectFile in $DriverDetectFiles | Where-Object Name -match 'NVIDIA-') {
-      If (Select-String -Path $DetectFile -Pattern $SearchStr | Where-Object {$_ -notmatch 'Legacy'}) {
+      If (Select-String -Path $DetectFile -Pattern $SearchStr | Where-Object {$_.Line -notmatch 'Legacy'}) {
         # Add DetectFile name to $DriverMatches
         $DriverMatches += $DetectFile.BaseName
         Write-Log -Message "Found matching driver '$($DetectFile.BaseName)'" -LogType 'Information'
@@ -133,7 +133,7 @@ ForEach ($Adapter in $DisplayAdapters) {
     $SearchStr = "$($Adapter.PNPDeviceID -replace 'PCI\\' -replace '\&SUBSYS.*')"
     # Search each Driver Detect file for this adapter's DeviceID
     ForEach ($DetectFile in $DriverDetectFiles | Where-Object Name -match 'INTEL-') {
-      If (Select-String -Path $DetectFile -Pattern $SearchStr | Where-Object {$_ -notmatch 'Legacy'}) {
+      If (Select-String -Path $DetectFile -Pattern $SearchStr | Where-Object {$_.Line -notmatch 'Legacy'}) {
         # Add DetectFile name to $DriverMatches
         $DriverMatches += $DetectFile.BaseName
         Write-Log -Message "Found matching driver '$($DetectFile.BaseName)'" -LogType 'Information'
@@ -145,21 +145,35 @@ ForEach ($Adapter in $DisplayAdapters) {
   }
 
   # Add $DriverMatch to $DriverPackages (in order of preference - if more than one match, choose the Pro, followed by the newer non-pro driver)
-  If ($DriverMatches -match 'RadeonPro') {
+  Switch ($DriverMatches) {
     # Add only Radeon Pro
-    $DriverPackages += $DriverMatches -match 'RadeonPro'
-  } elseif ($DriverMatches -match 'Radeon' -notmatch 'PreGCN') {
+    { $DriverMatches -match 'RadeonPro' -notmatch 'Legacy' } {
+      $DriverPackages += $DriverMatches -match 'RadeonPro' -notmatch 'Legacy' ; Break
+    }
+    # Add only Radeon Pro legacy
+    { $DriverMatches -match 'RadeonPro' -match 'Legacy' } {
+      $DriverPackages += $DriverMatches -match 'RadeonPro' -match 'Legacy' ; Break
+    }
     # Add only Radeon
-    $DriverPackages += $DriverMatches -match 'Radeon' -notmatch 'PreGCN'
-  } elseif ($DriverMatches -match 'Quadro' -notmatch 'Legacy') {
+    { $DriverMatches -match 'Radeon' -notmatch 'Pro|PreGCN|Legacy' } {
+      $DriverPackages += $DriverMatches -match 'Radeon' -notmatch 'Pro|PreGCN|Legacy' ; Break
+    }
+    # Add only Radeon legacy
+    { $DriverMatches -match 'Radeon' -match 'Legacy' -notmatch 'Pro|PreGCN' } {
+      $DriverPackages += $DriverMatches -match 'Radeon' -match 'Legacy' -notmatch 'Pro|PreGCN' ; Break
+    }
     # Add only Quadro
-    $DriverPackages += $DriverMatches -match 'Quadro' -notmatch 'Legacy'
-  } elseif ($DriverMatches -match 'GeForce' -notmatch 'Legacy') {
+    { $DriverMatches -match 'Quadro' -notmatch 'Legacy' } {
+      $DriverPackages += $DriverMatches -match 'Quadro' -notmatch 'Legacy' ; Break
+    }
     # Add only GeForce
-    $DriverPackages += $DriverMatches -match 'GeForce' -notmatch 'Legacy'
-  } else {
+    { $DriverMatches -match 'GeForce' -notmatch 'Legacy' } {
+      $DriverPackages += $DriverMatches -match 'GeForce' -notmatch 'Legacy' ; Break
+    }
     # Add whatever other driver(s) were found
-    $DriverPackages += $DriverMatches
+    Default {
+      $DriverPackages += $DriverMatches
+    }
   }
 }
 
