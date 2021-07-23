@@ -119,8 +119,11 @@ foreach ($DownloadFile in $(Get-ChildItem -Path "$PSScriptRoot\*\*\*" | Where-Ob
       }
     }
 
-    # Delete existing package source file(s)
+    # Create package source folder if necessary
     $CompressedDriver = Get-Item -Path "$ExtractedDriver.$Compression"
+    New-Item -Path "$GpuPackagesRoot\$($CompressedDriver.Directory.Parent.Name)\$($CompressedDriver.Directory.Name)" -ItemType Directory -ErrorAction SilentlyContinue > $null
+
+    # Delete existing package source file(s)
     $DriverSourceFolder = Get-Item -Path "$GpuPackagesRoot\$($CompressedDriver.Directory.Parent.Name)\$($CompressedDriver.Directory.Name)"
     Remove-Item -Path "$DriverSourceFolder\*" -Force -ErrorAction SilentlyContinue
 
