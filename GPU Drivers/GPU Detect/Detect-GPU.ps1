@@ -146,11 +146,11 @@ ForEach ($Adapter in $DisplayAdapters) {
 
   # Add $DriverMatch to $DriverPackages (in order of preference - if more than one match, choose the Pro, followed by the newer non-pro driver)
   Switch ($DriverMatches) {
-    # Add only Radeon Pro
+    # Add only RadeonPro
     { $DriverMatches -match 'RadeonPro' -notmatch 'Legacy' } {
       $DriverPackages += $DriverMatches -match 'RadeonPro' -notmatch 'Legacy' ; Break
     }
-    # Add only Radeon Pro legacy
+    # Add only RadeonProLegacy
     { $DriverMatches -match 'RadeonPro' -match 'Legacy' } {
       $DriverPackages += $DriverMatches -match 'RadeonPro' -match 'Legacy' ; Break
     }
@@ -158,7 +158,7 @@ ForEach ($Adapter in $DisplayAdapters) {
     { $DriverMatches -match 'Radeon' -notmatch 'Pro|PreGCN|Legacy' } {
       $DriverPackages += $DriverMatches -match 'Radeon' -notmatch 'Pro|PreGCN|Legacy' ; Break
     }
-    # Add only Radeon legacy
+    # Add only RadeonLegacy
     { $DriverMatches -match 'Radeon' -match 'Legacy' -notmatch 'Pro|PreGCN' } {
       $DriverPackages += $DriverMatches -match 'Radeon' -match 'Legacy' -notmatch 'Pro|PreGCN' ; Break
     }
@@ -167,10 +167,14 @@ ForEach ($Adapter in $DisplayAdapters) {
       $DriverPackages += $DriverMatches -match 'Quadro' -notmatch 'Legacy' ; Break
     }
     # Add only GeForce
-    { $DriverMatches -match 'GeForce' -notmatch 'Legacy' } {
+    { $DriverMatches -match 'GeForce' -notmatch 'Kepler|Legacy' } {
       $DriverPackages += $DriverMatches -match 'GeForce' -notmatch 'Legacy' ; Break
     }
-    # Add whatever other driver(s) were found
+    # Add only GeForceKepler
+    { $DriverMatches -match 'GeForce' -match 'Kepler' } {
+      $DriverPackages += $DriverMatches -match 'GeForce' -notmatch 'Legacy' ; Break
+    }
+    # Add whatever older driver(s) were found - (NVIDIA Legacy or AMD FirePro or PreGCN)
     Default {
       $DriverPackages += $DriverMatches
     }
