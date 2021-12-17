@@ -62,6 +62,13 @@ Function Update-CMPackage {
 
 # ------------ Main ------------ #
 
+# Sanity check to make sure this script is being run from a local drive
+If ($PSScriptRoot -match '\\\\') {
+  Write-Host "This script needs to be run from a local drive."
+  Pause
+  Exit
+}
+
 # Self-elevate the script if required
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
   if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
