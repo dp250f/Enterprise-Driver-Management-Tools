@@ -23,7 +23,7 @@ $PackageSources = Get-CMPackage -Fast | Where-Object { $_.Name -like 'Drivers - 
 Pop-Location
 
 # Gather all source folder paths in DA-Tool Source Root folder
-$DatSources = Get-ChildItem -Path "$DatSourceRoot\*\*-Windows*","$DatSourceRoot\*\*\BIOS\*" -Directory | Select-Object FullName | Sort-Object FullName
+$DatSources = Get-ChildItem -Path "$DatSourceRoot\*\*-Windows1[0-1]-*","$DatSourceRoot\*\*\Windows1[0-1]-*","$DatSourceRoot\*\*\BIOS\*" -Directory | Select-Object FullName | Sort-Object FullName
 
 # Build array of folders to delete
 $FoldersToDelete = @()
